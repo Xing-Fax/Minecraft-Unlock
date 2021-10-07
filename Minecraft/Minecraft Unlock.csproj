@@ -31,7 +31,7 @@
     <BootstrapperEnabled>true</BootstrapperEnabled>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
+    <PlatformTarget>x86</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -145,6 +145,12 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="Resources\图标.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\IObitUnlocker.Wrapper\IObitUnlocker.Wrapper.csproj">
+      <Project>{fa5efada-e935-4dd8-89ae-2f657b311b77}</Project>
+      <Name>IObitUnlocker.Wrapper</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

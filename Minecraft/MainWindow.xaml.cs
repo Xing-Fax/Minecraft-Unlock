@@ -21,6 +21,7 @@ using System.Windows.Forms;
 using System.Drawing;
 using System.Windows.Media.Animation;
 using System.ComponentModel;
+using IObitUnlocker.Wrapper;
 
 namespace Minecraft
 {
@@ -30,8 +31,12 @@ namespace Minecraft
     /// </summary>
     public partial class MainWindow : Window
     {
-        string Absolute_path = AppDomain.CurrentDomain.BaseDirectory;
-        string[] Catalog_file = new string[8];
+        // 关闭64位（文件系统）的操作转向
+        [DllImport("Kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool Wow64DisableWow64FsRedirection(ref IntPtr ptr);
+        // 开启64位（文件系统）的操作转向
+        [DllImport("Kernel32.dll", CharSet = CharSet.Auto, SetLastError = true)]
+        public static extern bool Wow64RevertWow64FsRedirection(IntPtr ptr);
 
         private void Grid_MouseMove(object sender, System.Windows.Input.MouseEventArgs e)
         {
@@ -52,104 +57,88 @@ namespace Minecraft
         {
             InitializeComponent();
 
-            Catalog_file[0] = Absolute_path + @"IObit Unlocker\IObitUnlocker.dll";
-            Catalog_file[1] = Absolute_path + @"IObit Unlocker\IObitUnlocker.exe";
-            Catalog_file[2] = Absolute_path + @"IObit Unlocker\IObitUnlocker.sys";
-            Catalog_file[3] = Absolute_path + @"IObit Unlocker\IObitUnlockerExtension.dll";
-            Catalog_file[4] = Absolute_path + @"Original file\System32\Windows.ApplicationModel.Store.dll";
-            Catalog_file[5] = Absolute_path + @"Original file\SysWOW64\Windows.ApplicationModel.Store.dll";
-            Catalog_file[6] = Absolute_path + @"Replace file\System32\Windows.ApplicationModel.Store.dll";
-            Catalog_file[7] = Absolute_path + @"Replace file\SysWOW64\Windows.ApplicationModel.Store.dll";
-
-            if (related_functions.Fingerprint_verification.Document_verification() != true)
-                Environment.Exit(0);
+            //if (related_functions.Fingerprint_verification.Document_verification() != true)
+            //    Environment.Exit(0);
 
             Log_Write("程序启动...");
         }
 
-        void Delete_file1(object sender, DoWorkEventArgs e)
+        void Replace_file(object sender, DoWorkEventArgs e)
         {
-            related_functions.CMD.RunCmd2(e.Argument.ToString(), @" /Delete C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll /Advanced");
-        }
+            string Parameter = e.Argument.ToString();
+            string Path_file1 = @"C:\Windows\System32\Windows.ApplicationModel.Store.dll";
+            string Path_file2 = @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll";
 
-        void Delete_file2(object sender, DoWorkEventArgs e)
-        {
-            related_functions.CMD.RunCmd2(e.Argument.ToString(), @" /Delete C:\Windows\System32\Windows.ApplicationModel.Store.dll /Advanced");
-        }
+            string file_1 = string.Empty;
+            string file_2 = string.Empty;
 
-        void Start_in_the_background(object sender, DoWorkEventArgs e)
-        {
-            Log_Write("开始替换文件...");
-            Log_Write("检查文件完整性...");
-            bool is_it_complete = true;
-            for (int i = 0; i < Catalog_file.Length; i++)
-                if (!File.Exists(Catalog_file[i]))
-                    is_it_complete = false;
-
-            if (is_it_complete == true)
+            if (Parameter == "Revise")
             {
-                Log_Write("开始删除文件...");
-
-                using (BackgroundWorker bw = new BackgroundWorker())
+                Log_Write("开始替换文件...");
+                file_1 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Revise\System32\Windows.ApplicationModel.Store.dll");
+                file_2 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Revise\SysWOW64\Windows.ApplicationModel.Store.dll");
+                Log_Write("释放资源...");
+                if(!IObitController.Freed_file("Revise"))
                 {
-                    bw.DoWork += new DoWorkEventHandler(Delete_file1);
-                    bw.RunWorkerAsync(Catalog_file[1]);
-                }
-
-                using (BackgroundWorker bw = new BackgroundWorker())
-                {
-                    bw.DoWork += new DoWorkEventHandler(Delete_file2);
-                    bw.RunWorkerAsync(Catalog_file[1]);
-                }
-
-                while(true)
-                {
-                    Thread.Sleep(50);
-                    if (!File.Exists(@"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll") && 
-                        !File.Exists(@"C:\Windows\System32\Windows.ApplicationModel.Store.dll"))
-                    {
-                        related_functions.CMD.RunCmd("taskkill /IM IObitUnlocker.exe");
-                        Log_Write("文件删除完毕!");
-                        break;
-                    }
-                }
-
-                Log_Write("开始复制新的文件...");
-
-                if (e.Argument .ToString () == "0")
-                {
-                    File.Copy(Catalog_file[6], @"C:\Windows\System32\Windows.ApplicationModel.Store.dll", true);
-                    File.Copy(Catalog_file[7], @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll", true);
-                }
-                else 
-                {
-                    File.Copy(Catalog_file[4], @"C:\Windows\System32\Windows.ApplicationModel.Store.dll", true);
-                    File.Copy(Catalog_file[5], @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll", true);
-                }
-
-
-                if (File.Exists(@"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll") &&
-                    File.Exists(@"C:\Windows\System32\Windows.ApplicationModel.Store.dll"))
-                {
-                    Log_Write("复制完毕!");
-                }
-                else
-                {
-                    Log_Write("复制失败!!!");
+                    Log_Write("资源释放失败...");
+                    return;
                 }
             }
             else
             {
-                Log_Write("文件检查失败,可能缺少文件...");
+                Log_Write("开始还原文件...");
+                file_1 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Original\System32\Windows.ApplicationModel.Store.dll");
+                file_2 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Original\SysWOW64\Windows.ApplicationModel.Store.dll");
+                Log_Write("释放资源...");
+                if(!IObitController.Freed_file("Original"))
+                {
+                    Log_Write("资源释放失败...");
+                    return;
+                }
             }
+
+            Log_Write("加载驱动...");
+            IObitController.DriverStart();
+
+            Log_Write("删除原始文件...");
+            var file = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Path_file1);
+
+            IObitController.UnlockFile(file, FileOperation.UnlockAndDelete);
+
+            file = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Path_file2);
+
+            IObitController.UnlockFile(file, FileOperation.UnlockAndDelete);
+
+            IObitController.DriverStop();
+            IObitController.DriverClose(); //释放资源
+
+            Log_Write("开始移动文件...");
+
+            IntPtr oldWOW64State = new IntPtr();
+            Wow64DisableWow64FsRedirection(ref oldWOW64State);
+
+            File.Copy(file_1, Path_file1, true);
+            File.Copy(file_2, Path_file2, true);
+
+            Wow64RevertWow64FsRedirection(oldWOW64State);
+
+            if (File .Exists (Path_file1) && File.Exists(Path_file2))
+            {
+                Log_Write("程序执行成功!!!");
+            }
+            else
+            {
+                Log_Write("执行失败!!!");
+            }
+            IObitController.Delete_file_temp();
         }
 
         private void 启动_Click(object sender, RoutedEventArgs e)
         {
             using (BackgroundWorker bw = new BackgroundWorker())
             {
-                bw.DoWork += new DoWorkEventHandler(Start_in_the_background);
-                bw.RunWorkerAsync("0");
+                bw.DoWork += new DoWorkEventHandler(Replace_file);
+                bw.RunWorkerAsync("Revise");
             }
         }
 
@@ -157,14 +146,15 @@ namespace Minecraft
         {
             using (BackgroundWorker bw = new BackgroundWorker())
             {
-                bw.DoWork += new DoWorkEventHandler(Start_in_the_background);
-                bw.RunWorkerAsync("1");
+                bw.DoWork += new DoWorkEventHandler(Replace_file);
+                bw.RunWorkerAsync("Original");
             }
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             主窗体.Visibility = Visibility.Collapsed;
+            IObitController.Delete_file_temp();
             Environment.Exit(0);
         }
     }
