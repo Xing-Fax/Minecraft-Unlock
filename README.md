@@ -27,6 +27,6 @@
   
   ### 最后
   
-  蓝奏云链接：https://wwe.lanzoui.com/b01oi83rc 密码:e1ez
+  蓝奏云链接：https://wwe.lanzouy.com/iLAKHv1oelg
   
   本程序遵循GPL ( GNU General Public License )开源许可协议，程序仅供学习交流，严禁商用或其他非法用途！
