@@ -1,6 +1,12 @@
 # Minecraft-Unlock
 用于绕过win10 Minecraft验证系统
 
+### 请支持正版！
+
+www.Minecraft.net
+
+一次购买终身享受 请务必支持正版!!!
+
 ### 介绍
 
 算是第二种绕过验证的方法了吧
