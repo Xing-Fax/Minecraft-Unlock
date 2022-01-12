@@ -58,7 +58,7 @@ namespace Minecraft
             InitializeComponent();
 
             //if (related_functions.Fingerprint_verification.Document_verification() != true)
-            //    Environment.Exit(0);
+            //   Environment.Exit(0);
 
             Log_Write("程序启动...");
         }
@@ -69,8 +69,8 @@ namespace Minecraft
             string Path_file1 = @"C:\Windows\System32\Windows.ApplicationModel.Store.dll";
             string Path_file2 = @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll";
 
-            string file_1 = string.Empty;
-            string file_2 = string.Empty;
+            string file_1; 
+            string file_2;
 
             if (Parameter == "Revise")
             {
@@ -101,13 +101,10 @@ namespace Minecraft
             IObitController.DriverStart();
 
             Log_Write("删除原始文件...");
-            var file = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Path_file1);
 
-            IObitController.UnlockFile(file, FileOperation.UnlockAndDelete);
+            IObitController.UnlockFile(Path_file1, FileOperation.UnlockAndDelete);
 
-            file = System.IO.Path.Combine(Directory.GetCurrentDirectory(), Path_file2);
-
-            IObitController.UnlockFile(file, FileOperation.UnlockAndDelete);
+            IObitController.UnlockFile(Path_file2, FileOperation.UnlockAndDelete);
 
             IObitController.DriverStop();
             IObitController.DriverClose(); //释放资源
@@ -117,14 +114,14 @@ namespace Minecraft
             IntPtr oldWOW64State = new IntPtr();
             Wow64DisableWow64FsRedirection(ref oldWOW64State);
 
-            File.Copy(file_1, Path_file1, true);
-            File.Copy(file_2, Path_file2, true);
+            Log_Write(related_functions.CMD.RunCmd("Copy \"" + file_1 + "\" \"" + Path_file1 + "\"").Replace("\n","").Replace(" ", ""));
+            Log_Write(related_functions.CMD.RunCmd("Copy \"" + file_2 + "\" \"" + Path_file2 + "\"").Replace("\n", "").Replace(" ",""));
 
             Wow64RevertWow64FsRedirection(oldWOW64State);
 
             if (File .Exists (Path_file1) && File.Exists(Path_file2))
             {
-                Log_Write("程序执行成功!!!");
+                Log_Write("执行成功!!!");
             }
             else
             {
