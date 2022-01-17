@@ -45,7 +45,7 @@ namespace Minecraft
 
         private void Label_MouseUp(object sender, MouseButtonEventArgs e)
         {
-            Process.Start("https://github.com/xingchuanzhen/Minecraft_Bypass_the_program");
+            Process.Start("https://github.com/xingchuanzhen/Minecraft-Unlock");
         }
 
         private void Log_Write(string str)
@@ -69,8 +69,8 @@ namespace Minecraft
             string Path_file1 = @"C:\Windows\System32\Windows.ApplicationModel.Store.dll";
             string Path_file2 = @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll";
 
-            string file_1; 
-            string file_2;
+            string file_1 = string.Empty;
+            string file_2 = string.Empty;
 
             if (Parameter == "Revise")
             {
@@ -90,7 +90,7 @@ namespace Minecraft
                 file_1 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Original\System32\Windows.ApplicationModel.Store.dll");
                 file_2 = System.IO.Path.Combine(Directory.GetCurrentDirectory(), @"Original\SysWOW64\Windows.ApplicationModel.Store.dll");
                 Log_Write("释放资源...");
-                if(!IObitController.Freed_file("Original"))
+                if (!IObitController.Freed_file("Original"))
                 {
                     Log_Write("资源释放失败...");
                     return;
@@ -119,7 +119,7 @@ namespace Minecraft
 
             Wow64RevertWow64FsRedirection(oldWOW64State);
 
-            if (File .Exists (Path_file1) && File.Exists(Path_file2))
+            if (File.Exists(Path_file1) && File.Exists(Path_file2))
             {
                 Log_Write("执行成功!!!");
             }

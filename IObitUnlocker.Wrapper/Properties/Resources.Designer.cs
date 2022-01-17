@@ -103,6 +103,26 @@ namespace IObitUnlocker.Wrapper.Properties {
         /// <summary>
         ///   查找 System.Byte[] 类型的本地化资源。
         /// </summary>
+        internal static byte[] Resources_System32_Win11 {
+            get {
+                object obj = ResourceManager.GetObject("Resources_System32_Win11", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
+        internal static byte[] Resources_SysWOW64_Win11 {
+            get {
+                object obj = ResourceManager.GetObject("Resources_SysWOW64_Win11", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   查找 System.Byte[] 类型的本地化资源。
+        /// </summary>
         internal static byte[] Revise_System32 {
             get {
                 object obj = ResourceManager.GetObject("Revise_System32", resourceCulture);

@@ -130,6 +130,12 @@
   <data name="Original_SysWOW64" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Original_file\SysWOW64\Original_SysWOW64.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>
+  <data name="Resources_System32_Win11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Original_file\System32\Resources_System32_Win11.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
+  <data name="Resources_SysWOW64_Win11" type="System.Resources.ResXFileRef, System.Windows.Forms">
+    <value>..\Resources\Original_file\SysWOW64\Resources_SysWOW64_Win11.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </data>
   <data name="Revise_System32" type="System.Resources.ResXFileRef, System.Windows.Forms">
     <value>..\Resources\Resources_file\System32\Resources_System32.dll;System.Byte[], mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </data>

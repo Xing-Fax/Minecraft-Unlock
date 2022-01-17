@@ -1,5 +1,6 @@
 ﻿using System;
 using System.IO;
+using System.Management;
 using System.Runtime.InteropServices;
 
 namespace IObitUnlocker.Wrapper
@@ -44,8 +45,20 @@ namespace IObitUnlocker.Wrapper
                     {
                         Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + @"\Original\SysWOW64\"));
                         Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + @"\Original\System32\"));
-                        File.WriteAllBytes(Original_file_1, Properties.Resources.Original_System32);
-                        File.WriteAllBytes(Original_file_2, Properties.Resources.Original_SysWOW64);
+                        ManagementClass System_Inf = new ManagementClass("Win32_OperatingSystem");
+                        string system = string.Empty;
+                        foreach (ManagementObject O in System_Inf.GetInstances())
+                            system += O["Caption"];
+                        if (system.Contains("Windows 11"))
+                        {
+                            File.WriteAllBytes(Original_file_1, Properties.Resources.Resources_System32_Win11);
+                            File.WriteAllBytes(Original_file_2, Properties.Resources.Resources_SysWOW64_Win11);
+                        }
+                        else
+                        {
+                            File.WriteAllBytes(Original_file_1, Properties.Resources.Original_System32);
+                            File.WriteAllBytes(Original_file_2, Properties.Resources.Original_SysWOW64);
+                        }
                     }
                     catch
                     {
