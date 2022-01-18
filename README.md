@@ -7,11 +7,12 @@ www.Minecraft.net
 
 一次购买终身享受 请务必支持正版!!!
 
-### 介绍
 
-算是第二种绕过验证的方法了吧
+通过替换DLL实现绕过参见 https://github.com/xingchuanzhen/Minecraft-Unlock
 
-是通过替换C:\Windows\SysWOW64和C:\Windows\System32目录下的Windows.ApplicationModel.Store.dll来实现绕过验证
+通过禁用服务实现绕过参见：https://github.com/xingchuanzhen
+
+通过修改内存实现绕过参见：https://github.com/xingchuanzhen/Minecraft_Memory_Bypass
 
 ### 使用方法
 
