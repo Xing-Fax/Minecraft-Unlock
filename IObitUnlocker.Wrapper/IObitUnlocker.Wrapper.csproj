@@ -66,22 +66,28 @@
     <None Include="Resources\IObitUnlocker.sys" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Original_file\System32\Original_System32.dll" />
+    <None Include="Resources\Original_File\System32\Original_System32_Win10.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Original_file\SysWOW64\Original_SysWOW64.dll" />
+    <None Include="Resources\Original_File\System32\Original_System32_Win11.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Resources_file\System32\Resources_System32.dll" />
+    <None Include="Resources\Original_File\SysWOW64\Original_SysWOW64_Win10.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Resources_file\SysWOW64\Resources_SysWOW64.dll" />
+    <None Include="Resources\Original_File\SysWOW64\Original_SysWOW64_Win11.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Original_file\System32\Resources_System32_Win11.dll" />
+    <None Include="Resources\Revise_File\System32\Revise_System32_Win11.dll" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\Original_file\SysWOW64\Resources_SysWOW64_Win11.dll" />
+    <None Include="Resources\Revise_File\System32\Revise_System32_Win10.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Revise_File\SysWOW64\Revise_SysWOW64_Win11.dll" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Revise_File\SysWOW64\Revise_SysWOW64_Win10.dll" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

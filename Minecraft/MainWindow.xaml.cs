@@ -57,8 +57,8 @@ namespace Minecraft
         {
             InitializeComponent();
 
-            //if (related_functions.Fingerprint_verification.Document_verification() != true)
-            //   Environment.Exit(0);
+            if (related_functions.Fingerprint_verification.Document_verification() != true)
+               Environment.Exit(0);
 
             Log_Write("程序启动...");
         }

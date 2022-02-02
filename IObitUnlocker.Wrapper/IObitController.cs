@@ -51,13 +51,13 @@ namespace IObitUnlocker.Wrapper
                             system += O["Caption"];
                         if (system.Contains("Windows 11"))
                         {
-                            File.WriteAllBytes(Original_file_1, Properties.Resources.Resources_System32_Win11);
-                            File.WriteAllBytes(Original_file_2, Properties.Resources.Resources_SysWOW64_Win11);
+                            File.WriteAllBytes(Original_file_1, Properties.Resources.Original_System32_Win11);
+                            File.WriteAllBytes(Original_file_2, Properties.Resources.Original_SysWOW64_Win11);
                         }
                         else
                         {
-                            File.WriteAllBytes(Original_file_1, Properties.Resources.Original_System32);
-                            File.WriteAllBytes(Original_file_2, Properties.Resources.Original_SysWOW64);
+                            File.WriteAllBytes(Original_file_1, Properties.Resources.Original_System32_Win10);
+                            File.WriteAllBytes(Original_file_2, Properties.Resources.Original_SysWOW64_Win10);
                         }
                     }
                     catch
@@ -72,8 +72,23 @@ namespace IObitUnlocker.Wrapper
                     {
                         Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + @"\Revise\SysWOW64\"));
                         Directory.CreateDirectory(Path.Combine(Directory.GetCurrentDirectory() + @"\Revise\System32\"));
-                        File.WriteAllBytes(Revise_file_1, Properties.Resources.Revise_System32);
-                        File.WriteAllBytes(Revise_file_2, Properties.Resources.Revise_SysWOW64);
+                        ManagementClass System_Inf = new ManagementClass("Win32_OperatingSystem");
+                        string system = string.Empty;
+                        foreach (ManagementObject O in System_Inf.GetInstances())
+                            system += O["Caption"];
+
+                        if (system.Contains("Windows 11"))
+                        {
+                            File.WriteAllBytes(Revise_file_1, Properties.Resources.Revise_System32_Win11);
+                            File.WriteAllBytes(Revise_file_2, Properties.Resources.Revise_SysWOW64_Win11);
+                        }
+                        else
+                        {
+                            File.WriteAllBytes(Revise_file_1, Properties.Resources.Revise_System32_Win10);
+                            File.WriteAllBytes(Revise_file_2, Properties.Resources.Revise_SysWOW64_Win10);
+                        }
+
+
                     }
                     catch
                     {
