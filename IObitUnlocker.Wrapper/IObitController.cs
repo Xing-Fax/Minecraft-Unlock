@@ -87,8 +87,6 @@ namespace IObitUnlocker.Wrapper
                             File.WriteAllBytes(Revise_file_1, Properties.Resources.Revise_System32_Win10);
                             File.WriteAllBytes(Revise_file_2, Properties.Resources.Revise_SysWOW64_Win10);
                         }
-
-
                     }
                     catch
                     {

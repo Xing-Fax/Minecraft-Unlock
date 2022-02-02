@@ -69,8 +69,7 @@ namespace Minecraft
             string Path_file1 = @"C:\Windows\System32\Windows.ApplicationModel.Store.dll";
             string Path_file2 = @"C:\Windows\SysWOW64\Windows.ApplicationModel.Store.dll";
 
-            string file_1 = string.Empty;
-            string file_2 = string.Empty;
+            string file_1,file_2;
 
             if (Parameter == "Revise")
             {
@@ -108,6 +107,13 @@ namespace Minecraft
 
             IObitController.DriverStop();
             IObitController.DriverClose(); //释放资源
+
+            if (File.Exists(Path_file1) && File.Exists(Path_file2))
+            {
+                Log_Write("文件删除失败!!!");
+                IObitController.Delete_file_temp();
+                return;
+            }
 
             Log_Write("开始移动文件...");
 
